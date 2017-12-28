@@ -7,8 +7,12 @@ Buffer objects are Node's way of efficiently representing arbitrary arrays
 
 var fs = require('fs');
 
-var contents = fs.readFileSync(process.argv[2]);
+/*Asynchronous way*/
 
+
+
+/*Synchronous way*/
+var contents = fs.readFileSync(process.argv[2]);
 var str = contents.toString()
 var lines = str.split('\n');
 
