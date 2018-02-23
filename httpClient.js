@@ -1,9 +1,10 @@
 var url = process.argv[2];
 var http = require('http');
 
-http.get(url, function(req) {
-	req.setEncoding("utf8");
-	req.on("data", function(data) {
+http.get(url, function(response) {
+	response.setEncoding("utf8");
+	response.on("data", function(data) {
 		console.log(data);
 	});
+	response.on("error", console.error);
 });
