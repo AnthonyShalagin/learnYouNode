@@ -10,7 +10,6 @@
 
 */
 
-
 var http = require('http'),
 bl = require('bl');
 
@@ -27,6 +26,13 @@ http.get(url, function(res){
     });
 });
 
+
+/*
+Pipe function
+
+Use pipe to send a readable stream response and send it to a writable stream 
+bl (buffer list) which can wait until the readable stream is done before proceeding. 
+*/
 
 
 // var url = process.argv[2];
