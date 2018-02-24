@@ -11,23 +11,41 @@
 */
 
 
-var url = process.argv[2];
-var http = require('http');
+var http = require('http'),
+bl = require('bl');
 
-var result = [];
-
-http.get(url, function(response) {
-	
-	response.setEncoding("utf8");
-	
-	response.on("data", function(input) {
-		result.push(input);
-	});
-	
-	response.on("end", function() {
-		console.log(result.join("").length);
-		console.log(result.join(""));
-	});
-
-	response.on("error", console.error);
+var myBL = new bl(function(err, myBL){
+    console.log(myBL.length);
+    console.log(myBL.toString());
 });
+
+var url = process.argv[2];
+http.get(url, function(res){
+    res.pipe(myBL);
+    res.on('end', function(){
+        myBL.end();
+    });
+});
+
+
+
+// var url = process.argv[2];
+// var http = require('http');
+
+// var result = [];
+
+// http.get(url, function(response) {
+	
+// 	response.setEncoding("utf8");
+	
+// 	response.on("data", function(input) {
+// 		result.push(input);
+// 	});
+	
+// 	response.on("end", function() {
+// 		console.log(result.join("").length);
+// 		console.log(result.join(""));
+// 	});
+
+// 	response.on("error", console.error);
+// });
