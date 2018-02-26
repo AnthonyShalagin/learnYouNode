@@ -7,3 +7,18 @@
   Your server should listen on the port provided by the first argument to  
   your program.  
 */
+
+var http = require('http');
+var fs = require('fs');
+var map = require('through2-map');
+
+http.createServer((req, res) => {
+  if (req.method === 'POST') {
+    req.pipe(map(function(chunk) {
+      return chunk.toString().toUpperCase();
+    })).pipe(res);
+  }
+}).listen(process.argv[2]);
+
+
+
