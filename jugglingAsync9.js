@@ -1,33 +1,37 @@
-var http = require('http')
-var bl = require('bl')
-var results = []
-var count = 0
-
-function httpGet (index) {
-  http.get(process.argv[2 + index], function (response) {
-    response.pipe(bl(function (err, data) {
-      if (err) {
-        return console.error(err)
-      }
-
-      results[index] = data.toString()
-      count++
-
-      if (count === 3) {
-        printResults()
-      }
-    }))
-  })
+var files = process.argv.slice(2);
+var count = 0;
+var results = [];
+var http = require('http');
+function printOut() {
+    for (var t = 0; t < results.length; t++) {
+        console.log(results[t]);
+    }
 }
 
-function printResults () {
-  for (var i = 0; i < 3; i++) {
-    console.log(results[i])
-  }
+function run(id){
+    count++;
+    http.get(files[id], function(response) {
+        var output = '';
+
+        response.setEncoding('utf8');
+        response.on("data", function(data) {
+            output += data;
+        });
+        response.on("end", function() {
+            count--;
+            //console.log(count);
+            results[id] = output;
+            if (count === 0) {
+                printOut();
+            }
+        });
+        }).on('error', function(e){
+                console.log("error:" + e.message);
+            });
+
 }
 
-
-for (var i = 0; i < 3; i++) {
-  httpGet(i)
+for(var j = 0; j < files.length; j++){
+    //console.log('Running ' + (j+1) + 'st get');
+    run(j);
 }
-

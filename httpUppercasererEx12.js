@@ -8,17 +8,12 @@
   your program.  
 */
 
-var http = require('http');
-var fs = require('fs');
-var map = require('through2-map');
+var http = require('http'),
+    fs   = require('fs'),
+    port = process.argv[2],
+    path = process.argv[3];
 
-http.createServer((req, res) => {
-  if (req.method === 'POST') {
-    req.pipe(map(function(chunk) {
-      return chunk.toString().toUpperCase();
-    })).pipe(res);
-  }
-}).listen(process.argv[2]);
-
-
-
+var server = http.createServer(function(request, response) {
+    var stream = fs.createReadStream(path);
+    stream.pipe(response);
+}).listen(port);
