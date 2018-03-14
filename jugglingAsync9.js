@@ -14,10 +14,10 @@ function run(id){
         var output = '';
 
         response.setEncoding('utf8');
-        response.on("data", function(data) {
+        response.on('data', function(data) {
             output += data;
         });
-        response.on("end", function() {
+        response.on('end', function() {
             count--;
             //console.log(count);
             results[id] = output;
@@ -26,7 +26,7 @@ function run(id){
             }
         });
         }).on('error', function(e){
-                console.log("error:" + e.message);
+                console.log('error:' + e.message);
             });
 
 }
