@@ -1,10 +1,6 @@
-var lslib = require('./lslib');
-
-var dirname = process.argv[2];
-var ext = process.argv[3];
-
-lslib(dirname, ext, function(err, files) {
-  for (var i = 0; i < files.length; i++) {
-    console.log(files[i]);
-  }
-});
+/*
+ Create a new module by creating a new file that just contains your
+  directory reading and filtering function. To define a single function
+  export, you assign your function to the module.exports object, overwriting
+  what is already there:
+*/

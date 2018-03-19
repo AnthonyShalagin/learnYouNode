@@ -1,37 +1,15 @@
-var files = process.argv.slice(2);
-var count = 0;
-var results = [];
-var http = require('http');
-function printOut() {
-    for (var t = 0; t < results.length; t++) {
-        console.log(results[t]);
-    }
-}
+/*
+Don't expect these three servers to play nicely! They are not going to
+  give you complete responses in the order you hope, so you can't naively
+  just print the output as you get it because they will be out of order.
 
-function run(id){
-    count++;
-    http.get(files[id], function(response) {
-        var output = '';
+  You will need to queue the results and keep track of how many of the URLs
+  have returned their entire contents. Only once you have them all, you can
+  print the data to the console.
 
-        response.setEncoding('utf8');
-        response.on('data', function(data) {
-            output += data;
-        });
-        response.on('end', function() {
-            count--;
-            //console.log(count);
-            results[id] = output;
-            if (count === 0) {
-                printOut();
-            }
-        });
-        }).on('error', function(e){
-                console.log('error:' + e.message);
-            });
-
-}
-
-for(var j = 0; j < files.length; j++){
-    //console.log('Running ' + (j+1) + 'st get');
-    run(j);
-}
+  Counting callbacks is one of the fundamental ways of managing async in
+  Node. Rather than doing it yourself, you may find it more convenient to
+  rely on a third-party library such as [async](https://npmjs.com/async) or
+  [after](https://npmjs.com/after). But for this exercise, try and do it
+  without any external helper library.
+*/

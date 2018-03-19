@@ -37,20 +37,3 @@ Create a program that prints a list of files in a given directory,
   file:///usr/local/lib/node_modules/learnyounode/node_apidoc/path.html
 
 */
-
-var fs = require('fs');
-var path = require('path');
-
-fs.readdir(process.argv[2], function callback(err, list) {
-
-  for (var i = 0; i < list.length; i++) {
-    if (process.argv[3] == path.extname(list[i]).substring(1)) {
-      console.log(list[i]);
-    }
-  }
-
-});
-
-
-
-
